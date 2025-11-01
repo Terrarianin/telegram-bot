@@ -504,19 +504,14 @@ def main():
     init_db()
     application = Application.builder().token(BOT_TOKEN).build()
 
-    # Обработчики команд
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("dialogs", dialogs))
     application.add_handler(CommandHandler("help", help_command))
 
-    # Обработчики сообщений
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_text))
     application.add_handler(MessageHandler(filters.PHOTO | filters.VIDEO | filters.Document.ALL | filters.AUDIO, handle_media))
-
-    # Обработчик кнопок
     application.add_handler(CallbackQueryHandler(button_handler))
 
-    # Настройка команд меню
     application.post_init = set_commands
 
     print("✅ Бот запущен и ожидает сообщения...")
@@ -525,3 +520,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
